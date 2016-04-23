@@ -16,7 +16,7 @@ namespace BankApplication.Tests
         [TestMethod()]
         [TestCategory("AccountDepositTest")]
         [ExpectedException(typeof(InvalidAmountException))]
-        public void Account_Deposit_ThrowsInvalidAmountException_WhenZeroSendAsAmountToBeDeposisted()
+        public void Account_Deposit_ThrowsInvalidAmountException_When_Zero_Send_AsAmountToBeDeposisted()
         {
             // == Arranage  == 
             var sampleAccount = new Account("SBI4837");
@@ -30,7 +30,7 @@ namespace BankApplication.Tests
         [TestMethod()]
         [TestCategory("AccountDepositTest")]
         [ExpectedException(typeof(InvalidAmountException))]
-        public void Account_Deposit_ThrowsInvalidAmountException_WhenLessThanZeroAmountSendAsInputToBeDeposisted()
+        public void Account_Deposit_ThrowsInvalidAmountException_When_LessThanZeroAmount_SendAsInputToBeDeposisted()
         {
             // == Arrange ==
             var sampleAccount = new Account("SBI89273");
@@ -42,7 +42,7 @@ namespace BankApplication.Tests
 
         [TestMethod()]
         [TestCategory("AccountDepositTest")]
-        public void Account_Deposit_InputAmountGetSuccessfullyDeposited_WhenGreaterThanZeroAmountIsDeposited()
+        public void Account_Deposit_InputAmountGetSuccessfullyDeposited_When_GreaterThanZeroAmount_Is_Deposited()
         {
             // == Arrange ==
             var sampleAccount = new Account("SBI89273");
@@ -56,9 +56,9 @@ namespace BankApplication.Tests
         }
 
         [TestMethod()]
-        [TestCategory("TransferFundTest")]
+        [TestCategory("TransferFundUnitTest")]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Account_TransferFund_ThrowsException_WhenDestinationAccountIsNull()
+        public void Account_TransferFund_ThrowsException_When_DestinationAccount_IsNull()
         {
             // == Arrange ==
             var sourceAccount = new Account("SBI89273");
@@ -66,15 +66,15 @@ namespace BankApplication.Tests
 
             Account destinationAccount = null;
             var valueToBeTransferred = 10000;
-            
+
             // == Act ==
             sourceAccount.TransferFund(destinationAccount, valueToBeTransferred);
         }
 
         [TestMethod()]
-        [TestCategory("TransferFundTest")]
+        [TestCategory("TransferFundUnitTest")]
         [ExpectedException(typeof(InvalidAmountException))]
-        public void Account_TransferFund_ThrowsInvalidAmountException_WhenValueToBeTransferredIsZero()
+        public void Account_TransferFund_ThrowsInvalidAmountException_When_ValueToBeTransferred_IsZero()
         {
             // == Arrange ==
             var sourceAccount = new Account("SBI89273");
@@ -90,9 +90,9 @@ namespace BankApplication.Tests
         }
 
         [TestMethod()]
-        [TestCategory("TransferFundTest")]
+        [TestCategory("TransferFundUnitTest")]
         [ExpectedException(typeof(InvalidAmountException))]
-        public void Account_TransferFund_ThrowsInvalidAmountException_WhenValueToBeTransferredIsLessThanZero()
+        public void Account_TransferFund_ThrowsInvalidAmountException_When_ValueToBeTransferred_IsLessThanZero()
         {
             // == Arrange ==
             var sourceAccount = new Account("SBI89273");
@@ -108,9 +108,9 @@ namespace BankApplication.Tests
         }
 
         [TestMethod()]
-        [TestCategory("TransferFundTest")]
+        [TestCategory("TransferFundUnitTest")]
         [ExpectedException(typeof(InsufficientFundsException))]
-        public void Account_TransferFund_ThrowsInsufficientFundException_WhenBalanceMinusFundTobeTransferredIsLessThanMinimumBalance()
+        public void Account_TransferFund_ThrowsInsufficientFundException_When_BalanceLeft_After_Fund_Transfer_IsLessThan_MinimumBalance()
         {
             // == Arrange ==
             var sourceAccount = new Account("SBI89273");
@@ -125,8 +125,8 @@ namespace BankApplication.Tests
         }
 
         [TestMethod()]
-        [TestCategory("TransferFundTest")]
-        public void Account_TransferFund_SuccessfullyTransferFund_WhenAmountTobeTransferredIsGreaterThenZeroAndSufficientForSourceAccount()
+        [TestCategory("TransferFundUnitTest")]
+        public void Account_TransferFund_SourceAccountLeftWithProperBalance_When_AmountTransferred_From_OneAccount_ToAnotheAccount()
         {
             // == Arrange ==
             var sourceAccount = new Account("SBI89273");
@@ -140,6 +140,23 @@ namespace BankApplication.Tests
             sourceAccount.TransferFund(destinationAccount, valueToBeTransferred);
 
             Assert.AreEqual(sourceAccount.Balance, 15000);
+        }
+
+        [TestMethod()]
+        [TestCategory("TransferFundUnitTest")]
+        public void Account_TransferFund_DestinationAccountHaveProperBalance_When_AmountTransferred_From_OneAccount_ToAnotheAccount()
+        {
+            // == Arrange ==
+            var sourceAccount = new Account("SBI89273");
+            sourceAccount.Deposit(20000);
+
+            var destinationAccount = new Account("SBI758384");
+
+            var valueToBeTransferred = 5000;
+
+            // == Act ==
+            sourceAccount.TransferFund(destinationAccount, valueToBeTransferred);
+
             Assert.AreEqual(destinationAccount.Balance, 5000);
         }
 

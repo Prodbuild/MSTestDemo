@@ -43,8 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
-    <Compile Include="InsufficientFundsException.cs" />
-    <Compile Include="InvalidAmountException.cs" />
+    <Compile Include="BusinessExceptions\InsufficientFundsException.cs" />
+    <Compile Include="BusinessExceptions\InvalidAmountException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
